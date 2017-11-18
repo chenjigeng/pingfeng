@@ -6,7 +6,7 @@ const webpack = require('webpack');
 
 module.exports = {
   entry: {
-    app: './src/index.tsx'
+    app: './src/index'
   },
   devtool: 'source-map',
   resolve: {
