@@ -3,7 +3,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const config = {
   entry: './app/index.tsx',
   output: {
-    filename: 'app.bundle.js',
+    filename: '[name].[chunkhash].js',
     path: '/public',
     publicPath: '/assets'
   },
