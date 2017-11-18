@@ -6,6 +6,9 @@ const webpack = require('webpack');
 
 module.exports = {
   entry: {
+    'index': [
+      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
+    ],
     app: './src/index'
   },
   devtool: 'source-map',
@@ -13,11 +16,21 @@ module.exports = {
     extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js']
   },
   output: {
-    filename: '[name].[chunkhash].js',
-    path: path.resolve(__dirname, 'dist')
+    filename: '[name].[hash].js',
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
+  },
+  node: {
+    fs: "empty"
   },
   module: {
     loaders: [
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+        include: ['./server', './src']
+      },
       {
         test: /\.tsx?$/,
         loader: 'ts-loader'
@@ -39,14 +52,18 @@ module.exports = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin("style.css"),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new CleanWebpackPlugin(['dist']),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'common',
-    }),
     new HtmlWebpackPlugin({
       title: 'Production',
-      template: './index.html',
+      inject: 'body'
+    }),
+    new ExtractTextPlugin("style.css"),     
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'common',
     })
   ],
   devtool: 'eval'

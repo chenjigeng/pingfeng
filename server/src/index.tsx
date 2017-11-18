@@ -19,9 +19,5 @@ class App extends React.Component<IAppProps, IAppState> {
     )
   }
 }
-console.log('222ssss');
-console.log('123122ss');
-const rootEle = document.createElement('div');
-document.body.appendChild(rootEle);
 
-render(<App />, rootEle);
+render(<App />, document.getElementById('app'))
