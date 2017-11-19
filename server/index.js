@@ -1,51 +1,44 @@
-const Koa = require('koa');
-const app = new Koa();
-const webpack = require('webpack');
-const koaWebpackMiddleware = require('koa-webpack-middleware');
-const devMiddleware = koaWebpackMiddleware.devMiddleware;
-const hotMiddleware = koaWebpackMiddleware.hotMiddleware;
-const devConfig = require('../webpack.dev');
-const compile = webpack(devConfig)
-const serve = require('koa-static');
+var http = require('http');
 
-app.use(devMiddleware(compile, {
-  // display no info to console (only warnings and errors) 
-  noInfo: false,
+var express = require('express');
 
-  // display nothing to the console 
-  quiet: false,
+var app = express();
 
-  // switch into lazy mode 
-  // that means no watching, but recompilation on every request 
-  lazy: true,
+app.use(require('morgan')('short'));
 
-  // watch options (only lazy: false) 
-  watchOptions: {
-      aggregateTimeout: 300,
-      poll: true
-  },
+// ************************************
+// This is the real meat of the example
+// ************************************
+(function() {
 
-  // public path to bind the middleware to 
-  // use the same as in webpack 
-  publicPath: devConfig.output.publicPath,
+  // Step 1: Create & configure a webpack compiler
+  var webpack = require('webpack');
+  var webpackConfig = require('../webpack.dev');
+  var compiler = webpack(webpackConfig);
 
-  // custom headers 
-  headers: { "X-Custom-Header": "yes" },
+  // Step 2: Attach the dev middleware to the compiler & the server
+  app.use(require("webpack-dev-middleware")(compiler, {
+    noInfo: true, publicPath: webpackConfig.output.publicPath
+  }));
 
-  // options for formating the statistics 
-  stats: {
-      colors: true
-  }
-}))
-app.use(hotMiddleware(compile, {
-  log: console.log, 
-  path: '/__webpack_hmr', 
-  heartbeat: 10 * 1000 
-}))
+  // Step 3: Attach the hot middleware to the compiler & the server
+  app.use(require("webpack-hot-middleware")(compiler, {
+    log: console.log, path: '/__webpack_hmr', heartbeat: 10 * 1000
+  }));
+})();
 
-app.use(serve(__dirname, {extensions: ['html']}));
+// Do anything you like with the rest of your express application.
 
-app.listen(8000, () => {
-  console.log('listen in 8000');
+app.get("/", function(req, res) {
+  res.sendFile(__dirname + '/index.html');
+});
+app.get("/multientry", function(req, res) {
+  res.sendFile(__dirname + '/index-multientry.html');
 });
 
+if (require.main === module) {
+  var server = http.createServer(app);
+  server.listen(process.env.PORT || 8000, function() {
+    console.log("Listening on %j", server.address());
+  });
+}

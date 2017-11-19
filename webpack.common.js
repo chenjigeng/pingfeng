@@ -6,10 +6,10 @@ const webpack = require('webpack');
 
 module.exports = {
   entry: {
-    'index': [
+    app: [
       'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
+      './src/index',
     ],
-    app: './src/index'
   },
   devtool: 'source-map',
   resolve: {
@@ -52,19 +52,18 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
       title: 'Production',
-      inject: 'body'
+      template: './index.html',
     }),
     new ExtractTextPlugin("style.css"),     
     new webpack.optimize.CommonsChunkPlugin({
       name: 'common',
-    })
+    }),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
   ],
   devtool: 'eval'
 };
