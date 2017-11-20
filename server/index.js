@@ -1,7 +1,6 @@
 var http = require('http');
 
 var express = require('express');
-
 var app = express();
 
 app.use(require('morgan')('short'));
@@ -18,27 +17,60 @@ app.use(require('morgan')('short'));
 
   // Step 2: Attach the dev middleware to the compiler & the server
   app.use(require("webpack-dev-middleware")(compiler, {
-    noInfo: true, publicPath: webpackConfig.output.publicPath
+    noInfo: true, 
+    publicPath: webpackConfig.output.publicPath,
+    reload: true,
+    stats: { colors: true },
+    quiet: true    
   }));
-
-  // Step 3: Attach the hot middleware to the compiler & the server
-  app.use(require("webpack-hot-middleware")(compiler, {
+  var hotMiddleware = require("webpack-hot-middleware")(compiler, {
     log: console.log, path: '/__webpack_hmr', heartbeat: 10 * 1000
-  }));
+  });
+
+  compiler.plugin('compilation', function (compilation) {
+    compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) {
+      hotMiddleware.publish({ action: 'reload' })
+      cb()
+    })
+  })
+  // Step 3: Attach the hot middleware to the compiler & the server
+  app.use(hotMiddleware);
 })();
 
+
+
+// app.get('/column', (req, res) => {
+//   const context = {};
+//   const html = renderReactTemplate(context, req.url);
+  
+//   if (context.url) {
+//     res.writeHead(301, {
+//       Location: context.url
+//     })
+//     res.end()
+//   } else {
+//     res.write(`
+//       <!doctype html>
+//       <div id="app">${html}</div>
+//     `)
+//     res.end()
+//   }
+// })
 // Do anything you like with the rest of your express application.
 
-app.get("/", function(req, res) {
-  res.sendFile(__dirname + '/index.html');
-});
-app.get("/multientry", function(req, res) {
-  res.sendFile(__dirname + '/index-multientry.html');
+app.get('*', function(req, res) {
+
+})
+var server = http.createServer(app);
+server.listen(process.env.PORT || 8000, function() {
+  console.log("Listening on %j", server.address());
 });
 
-if (require.main === module) {
-  var server = http.createServer(app);
-  server.listen(process.env.PORT || 8000, function() {
-    console.log("Listening on %j", server.address());
-  });
+
+if (module.hot) {
+  console.log('123123');
+  // module.hot.accept('./hotModule.js', function() {
+  //     // var newHotModule = require('./hotModule.js');
+  //     // do something else
+  // });
 }

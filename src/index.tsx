@@ -1,25 +1,15 @@
 /* app/index.tsx */
 import * as React from 'react'
+import { BrowserRouter } from 'react-router-dom'
 import { render } from 'react-dom'
-import './index.css'
+import { App } from './App'
 import './index.less'
-import { Print } from './print';
 
-interface IAppProps {}
-interface IAppState {}
-
-class App extends React.Component<IAppProps, IAppState> {
-  public render(): JSX.Element {
-    return (
-      <div>
-        Hello worlds2222陈s2sss22222s
-        <Print />
-      </div>
-    )
-  }
-}
-
-render(<App />, document.getElementById('app'));
+render((
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+), document.getElementById('app'));
 const m:any = module;
 if (m.hot) {
   m.hot.accept()
