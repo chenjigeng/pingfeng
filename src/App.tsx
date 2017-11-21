@@ -2,6 +2,17 @@ import * as React from 'react';
 import { Route } from 'react-router-dom'
 import route from './Routes'
 
+const RouteWithSubRoutes = (route) => {
+  console.log(route);
+  return (
+    <div>
+      {route.routes.map((route, i) => (
+        <Route key={route.name} {...route} />
+      ))}
+    </div>
+  )
+}
+
 
 export class App extends React.Component<any, any> {
 
@@ -10,7 +21,7 @@ export class App extends React.Component<any, any> {
       <div>
         {
           route.map((router, index) => (
-            <Route key={index} {...router} />
+            <RouteWithSubRoutes key={index} {...router} />
           ))
         }
       </div>

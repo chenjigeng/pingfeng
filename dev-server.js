@@ -20,8 +20,7 @@ app.use(require("webpack-dev-middleware")(compiler, {
   noInfo: true, 
   publicPath: webpackConfig.output.publicPath,
   reload: true,
-  stats: { colors: true },
-  quiet: true    
+  stats: { colors: true }
 }));
 var hotMiddleware = require("webpack-hot-middleware")(compiler, {
   log: console.log, path: '/__webpack_hmr', heartbeat: 10 * 1000
