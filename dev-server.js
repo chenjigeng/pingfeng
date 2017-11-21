@@ -12,7 +12,7 @@ app.use(require('connect-history-api-fallback')())
 
 // Step 1: Create & configure a webpack compiler
 var webpack = require('webpack');
-var webpackConfig = require('../webpack.dev');
+var webpackConfig = require('./webpack.dev');
 var compiler = webpack(webpackConfig);
 
 // Step 2: Attach the dev middleware to the compiler & the server
@@ -36,40 +36,8 @@ compiler.plugin('compilation', function (compilation) {
 // Step 3: Attach the hot middleware to the compiler & the server
 app.use(hotMiddleware);
 
-
-
-// app.get('/column', (req, res) => {
-//   const context = {};
-//   const html = renderReactTemplate(context, req.url);
-  
-//   if (context.url) {
-//     res.writeHead(301, {
-//       Location: context.url
-//     })
-//     res.end()
-//   } else {
-//     res.write(`
-//       <!doctype html>
-//       <div id="app">${html}</div>
-//     `)
-//     res.end()
-//   }
-// })
 // Do anything you like with the rest of your express application.
-
-app.get('*', function(req, res) {
-
-})
 var server = http.createServer(app);
 server.listen(process.env.PORT || 8000, function() {
   console.log("Listening on %j", server.address());
 });
-
-
-if (module.hot) {
-  console.log('123123');
-  // module.hot.accept('./hotModule.js', function() {
-  //     // var newHotModule = require('./hotModule.js');
-  //     // do something else
-  // });
-}
