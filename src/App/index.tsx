@@ -33,25 +33,28 @@ export class App extends React.Component<any, any> {
   render() {  
     return (
       <Layout
-        style={{height: "100%"}}
+         style={{ height: '100%' }}
       >
-        <Sider 
-          width={200}
-          trigger={null}
-          collapsible
-          collapsed={this.state.collapsed}
-        >
-          <SideBar />
-        </Sider>
-        <Layout>
-          <Header style={{ background: '#fff', padding: 0 }}>
+        <Header style={{ background: '#404040', padding: 0 }}>
           <Icon
             className="trigger"
             type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
             onClick={this.toggle}
           />
-          </Header>
-          <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
+        </Header>
+        <Layout
+          style={{ height: '100%' }}
+        >
+          <Sider
+            style={{ borderTop: '2px solid rgb(44, 42, 42)', height: '100%' }}
+            width={200}
+            trigger={null}
+            collapsible
+            collapsed={this.state.collapsed}
+          >
+            <SideBar />
+          </Sider>
+          <Content style={{ background: '#fff', minHeight: 280, height: '100%' }}>
             {route.map((router, index) => (
               <RouteWithSubRoutes key={index} {...router} />
             ))}

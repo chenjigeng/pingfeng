@@ -9,6 +9,7 @@ export class SideBar extends React.Component<any, any> {
   render() {
     return (
       <Menu 
+        style={{ height: '100%' }}
         theme="dark"
         mode="inline"
         defaultSelectedKeys={['system']}
