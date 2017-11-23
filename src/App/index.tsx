@@ -5,6 +5,7 @@ import route from '../Route';
 import { SideBar } from '../SiderBar/index';
 
 import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
+import './app.less';
 
 const { Header, Sider, Content } = Layout;
 
@@ -35,12 +36,8 @@ export class App extends React.Component<any, any> {
       <Layout
          style={{ height: '100%' }}
       >
-        <Header style={{ background: '#404040', padding: 0 }}>
-          <Icon
-            className="trigger"
-            type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-            onClick={this.toggle}
-          />
+        <Header style={{ background: '#404040', padding: 0 }} className="header">
+          <span className="title">萍风</span>       
         </Header>
         <Layout
           style={{ height: '100%' }}
@@ -48,9 +45,9 @@ export class App extends React.Component<any, any> {
           <Sider
             style={{ borderTop: '2px solid rgb(44, 42, 42)', height: '100%' }}
             width={200}
-            trigger={null}
             collapsible
             collapsed={this.state.collapsed}
+            onCollapse={this.toggle}
           >
             <SideBar />
           </Sider>

@@ -8,6 +8,7 @@ export default [
     path: '/',
     title: '系统管理',
     key: 'system',
+    icon: 'appstore-o',
     routes: [{
       key: 'setting',
       title: '系统配置',
