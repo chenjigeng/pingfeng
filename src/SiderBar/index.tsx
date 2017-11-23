@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Menu, Button } from 'antd';
 import { Link } from 'react-router-dom';
-import routes from './Routes';
+import routes from '../Route';
 
 const SubMenu = Menu.SubMenu;
 

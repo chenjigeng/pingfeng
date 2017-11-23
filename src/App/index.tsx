@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Route } from 'react-router-dom';
 import { Layout, Icon } from 'antd';
-import route from './Routes';
-import { SideBar } from './SideBar';
+import route from '../Route';
+import { SideBar } from '../SiderBar/index';
 
 import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
 
@@ -32,7 +32,9 @@ export class App extends React.Component<any, any> {
   }
   render() {  
     return (
-      <Layout>
+      <Layout
+        style={{height: "100%"}}
+      >
         <Sider 
           width={200}
           trigger={null}
