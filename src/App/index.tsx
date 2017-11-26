@@ -13,9 +13,10 @@ const RouteWithSubRoutes = (route) => {
   console.log(route);
   return (
     <div>
-      {route.routes.map((route, i) => (
+      {route.routes && route.routes.map((route, i) => (
         <Route key={route.title} {...route} />
       ))}
+      {!route.routes && <Route key={route.title} {...route} />}
     </div>
   )
 }

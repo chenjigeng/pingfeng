@@ -21,16 +21,26 @@ export class SideBar extends React.Component<any, any> {
 }
 
 function MenuContainer(route) {
-  return (
-    <SubMenu title={<span><Icon type={route.icon} /><span>{route.title}</span></span>} key={route.key}>
-      {route.routes.map(r => (
-        <Menu.Item key={r.key}>
-          <Link to={r.path}>
-            <Icon type={r.icon} />
-            {r.title}
-          </Link>
-        </Menu.Item>
-      ))}
-    </SubMenu>
-  )
+  if (route.routes) {
+    return (
+      <SubMenu title={<span><Icon type={route.icon} /><span>{route.title}</span></span>} key={route.key}>
+        {route.routes.map(r => (
+          <Menu.Item key={r.key}>
+            <Link to={r.path}>
+              <Icon type={r.icon} />
+              {r.title}
+            </Link>
+          </Menu.Item>
+        ))}
+      </SubMenu>
+    )
+  } else {
+    return (
+      <Menu.Item key={route.key}>
+        <Icon type={route.icon} />
+        <span>{route.title}</span>
+      </Menu.Item>
+    )
+  }
+
 }
