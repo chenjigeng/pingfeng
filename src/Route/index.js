@@ -13,7 +13,7 @@ export default [
       key: 'setting',
       title: '系统配置',
       path: '/system',
-      component: () => <h1>系统配置</h1>
+      component: System,
     }, {
       key: 'user',
       title: '用户管理',

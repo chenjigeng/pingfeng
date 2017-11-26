@@ -51,7 +51,7 @@ export class App extends React.Component<any, any> {
           >
             <SideBar />
           </Sider>
-          <Content style={{ background: '#fff', minHeight: 280, height: '100%' }}>
+          <Content style={{ background: '#fff', minHeight: 280, height: '100%', padding: '20px' }}>
             {route.map((router, index) => (
               <RouteWithSubRoutes key={index} {...router} />
             ))}
