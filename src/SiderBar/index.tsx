@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Menu, Button, Icon } from 'antd';
+import { Menu, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 import routes from '../Route';
 
@@ -8,7 +8,7 @@ const SubMenu = Menu.SubMenu;
 export class SideBar extends React.Component<any, any> {
   render() {
     return (
-      <Menu 
+      <Menu
         style={{ height: '100%' }}
         theme="dark"
         mode="inline"
@@ -16,7 +16,7 @@ export class SideBar extends React.Component<any, any> {
       >
         {MenuContainer(routes[0])}
       </Menu>
-    )
+    );
   }
 }
 

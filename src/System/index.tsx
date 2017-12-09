@@ -3,6 +3,8 @@ import './system.less';
 import { Tabs } from 'antd';
 
 const TabPane = Tabs.TabPane;
+const a = 2;
+
 export class System extends React.Component<any, any> {
   render() {
     return (
