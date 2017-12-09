@@ -1,5 +1,5 @@
 import * as React from 'react';
-import "./system.less";
+import './system.less';
 import { Tabs } from 'antd';
 
 const TabPane = Tabs.TabPane;
@@ -22,6 +22,6 @@ export class System extends React.Component<any, any> {
           </TabPane>
         </Tabs>
       </div>
-    )
+    );
   }
 }

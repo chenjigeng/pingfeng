@@ -12,5 +12,7 @@ module.exports = {
         "browser": true,
         "node": true
     },
-    "rules": {}
+    "rules": {
+        "indent": ["error", 2]
+    }
 };
